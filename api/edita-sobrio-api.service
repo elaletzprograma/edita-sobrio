@@ -1,0 +1,15 @@
+[Unit]
+Description=Edita Sobrio — API de análisis (spaCy)
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/edita-sobrio-api
+ExecStart=/opt/edita-sobrio-api/venv/bin/uvicorn servidor:app --host 127.0.0.1 --port 8600 --workers 1
+Restart=always
+RestartSec=5
+Environment=HOME=/root
+
+[Install]
+WantedBy=multi-user.target

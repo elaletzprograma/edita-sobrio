@@ -1,0 +1,292 @@
+/* Edita Sobrio — etapa 02
+   Papel de fanzine: nada redondeado, divisores punteados, todo un poco chueco. */
+
+:root{
+  --paper:#f2ede3;
+  --paper-field:#faf7ef;
+  --text:#1c1814;
+  --muted:#6b6255;
+  --muted-2:#9a917f;
+  --red:#c93a32;
+  --red-hover:#a02a24;
+  --rule:#cfc6b4;      /* divisores punteados */
+  --rule-2:#d8cfbc;    /* borde sólido de campos */
+  --rule-3:#b3a892;    /* bordes de botón punteados */
+  --rule-4:#e0d8c6;    /* borde de los items del banco */
+
+  /* Un color por vicio. Mismo orden que en la barra lateral. */
+  --c-mente:#3f8f5f;
+  --c-adj:#d16a62;
+  --c-rep:#d9962e;
+  --c-rima:#bfa437;
+  --c-peri:#8b6fae;
+  --c-pret:#5b84b1;
+  --c-cliche:#b8443c;
+  --c-dim:#a3785a;
+  --c-mania:#2f7f83;   /* las mañas propias: el único frío de la paleta, para que resalten */
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--text);
+  font-family:'Courier Prime',monospace;
+}
+
+a{color:var(--red);text-decoration:none}
+a:hover{color:var(--red-hover)}
+[hidden]{display:none !important}
+button{font-family:'Courier Prime',monospace}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+/* --alto-aviso lo pone aviso.js: 0 si no hay barra o si ya la cerraste. */
+.pagina{min-height:calc(100vh - var(--alto-aviso, 0px));display:flex}
+
+/* ---------------- barra lateral ---------------- */
+
+.lateral{
+  width:270px;flex-shrink:0;
+  border-right:2px dashed var(--rule);
+  padding:32px 24px;
+  display:flex;flex-direction:column;gap:26px;
+}
+
+.lateral h2{
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted-2);margin:0 0 6px;font-weight:400;
+}
+
+.vicios{display:flex;flex-direction:column;gap:2px}
+
+.vicio{
+  display:flex;align-items:center;gap:10px;
+  background:transparent;border:none;padding:7px 4px;cursor:pointer;
+  font-size:14px;color:var(--text);text-align:left;width:100%;
+}
+.vicio__caja{
+  width:16px;height:16px;flex-shrink:0;
+  border:2px solid var(--rule-3);background:transparent;
+  display:inline-flex;align-items:center;justify-content:center;
+  color:var(--paper);font-size:11px;line-height:1;
+}
+.vicio[aria-checked="true"] .vicio__caja{border-color:var(--red);background:var(--red)}
+.vicio__nombre{border-bottom:3px solid var(--tono,transparent);padding-bottom:1px}
+
+.bloque{border-top:2px dashed var(--rule);padding-top:20px;display:flex;flex-direction:column;gap:12px}
+
+.btn-punteado{
+  font-size:14px;background:transparent;
+  border:2px dashed var(--rule-3);padding:8px 14px;cursor:pointer;color:var(--text);
+}
+.btn-punteado:hover{border-color:var(--red);color:var(--red)}
+.bloque .btn-punteado{align-self:flex-start}
+
+.banco{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--muted);max-height:280px;overflow:auto}
+.banco div{border-left:3px solid var(--rule-4);padding-left:8px}
+
+/* ---------------- mañas propias ---------------- */
+
+.manias__nota{font-size:12px;color:var(--muted);line-height:1.6;margin:0 0 12px}
+
+.manias__forma{display:flex;gap:8px}
+.manias__forma input{
+  flex:1;min-width:0;
+  background:var(--paper-field);
+  border:2px solid var(--rule-2);
+  padding:8px 10px;
+  font-family:'Courier Prime',monospace;font-size:13px;color:var(--text);
+  outline:none;
+}
+.manias__forma input:focus{border-color:var(--red)}
+.manias__forma input::placeholder{color:var(--muted-2)}
+.manias__forma button{white-space:nowrap}
+
+.manias__error{
+  font-size:12px;color:#a02a24;line-height:1.5;margin:10px 0 0;
+  border-left:3px solid var(--red);padding-left:8px;
+}
+
+.manias{display:flex;flex-direction:column;gap:4px;margin-top:12px;max-height:240px;overflow:auto}
+.mania{
+  display:flex;align-items:baseline;gap:8px;
+  font-size:12.5px;color:var(--muted);
+  border-left:3px solid var(--c-mania);padding-left:8px;
+}
+.mania span{flex:1;min-width:0;word-break:break-word}
+.mania button{
+  background:transparent;border:none;color:var(--muted-2);
+  font-family:'Courier Prime',monospace;font-size:12px;cursor:pointer;padding:0 2px;
+}
+.mania button:hover{color:var(--red)}
+
+.manias__vacio{font-size:12px;color:var(--muted-2);line-height:1.6;margin:12px 0 0}
+
+/* Se guardan en el navegador, así que conviene poder sacarlas de ahí. */
+.manias__copia{font-size:11.5px;color:var(--muted-2);margin:12px 0 0}
+.manias__copia button{
+  background:transparent;border:none;color:var(--red);
+  font-family:'Courier Prime',monospace;font-size:11.5px;
+  cursor:pointer;text-decoration:underline;padding:0;
+}
+.manias__copia button:hover{color:var(--red-hover)}
+
+/* Los créditos se despegan de lo de arriba con su propia línea punteada:
+   pegados, el logo se encimaba con el bloque anterior. */
+.creditos{
+  margin-top:auto;
+  padding-top:22px;
+  border-top:2px dashed var(--rule);
+  display:flex;flex-direction:column;gap:14px;
+}
+.creditos img{width:auto;display:block;object-fit:contain}
+.creditos img.aletz{height:26px;align-self:flex-start;opacity:.8}
+.creditos img.tinta{height:14px;align-self:flex-start;opacity:.5}
+.creditos p{font-size:11.5px;color:var(--muted-2);line-height:1.6;margin:0}
+
+/* ---------------- contenido ---------------- */
+
+.contenido{flex:1;min-width:0;padding:40px 56px 64px;display:flex;flex-direction:column;gap:26px;max-width:960px}
+
+.encabezado{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.encabezado h1{
+  font-family:'Special Elite',monospace;font-size:52px;line-height:1;
+  color:var(--text);transform:rotate(0.6deg);margin:0;font-weight:400;
+}
+.kicker{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--muted-2);margin:8px 0 0}
+.encabezado a{font-size:14px;margin-top:10px}
+
+.entrada{display:flex;flex-direction:column;gap:16px}
+.entrada__titulo{font-size:22px;font-weight:700;margin:0}
+.entrada__tip{font-size:13px;color:var(--muted-2);margin:4px 0 0}
+
+.campo{
+  min-height:380px;background:var(--paper-field);
+  border:2px solid var(--rule-2);padding:24px 28px;
+  font-family:'Courier Prime',monospace;font-size:16px;line-height:1.8;color:var(--text);
+  resize:vertical;outline:none;
+  box-shadow:inset 0 2px 8px rgba(28,24,20,0.06);
+  width:100%;
+}
+
+.analizar{
+  align-self:flex-start;
+  font-family:'Special Elite',monospace;font-size:22px;letter-spacing:4px;text-transform:uppercase;
+  background:var(--red);color:var(--paper);border:2px solid var(--red);
+  padding:12px 38px;cursor:pointer;transform:rotate(-0.8deg);
+}
+.analizar:hover{background:var(--red-hover);border-color:var(--red-hover)}
+.analizar[disabled]{opacity:.45;cursor:not-allowed}
+
+.resultados{display:flex;flex-direction:column;gap:22px}
+.resultados__barra{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.resultados__barra h2{font-size:22px;font-weight:700;margin:0}
+.acciones{display:flex;gap:12px;flex-wrap:wrap}
+.btn-punteado[aria-pressed="true"]{border-style:solid;border-color:var(--red);color:var(--red)}
+
+.leyenda{display:flex;gap:10px;flex-wrap:wrap}
+.leyenda span{font-size:12.5px;padding:4px 10px;color:var(--text)}
+
+/* La caja del texto anotado. En modo edición se vuelve contenteditable:
+   mismo look, sólo cambia el cursor y el borde. */
+.anotado{
+  background:var(--paper-field);border:2px solid var(--rule-2);
+  padding:32px 36px;font-size:16.5px;line-height:2;
+  white-space:pre-wrap;word-break:break-word;
+  box-shadow:inset 0 2px 8px rgba(28,24,20,0.06);
+  outline:none;
+}
+.anotado[contenteditable]{border-style:dashed;border-color:var(--red);cursor:text}
+
+/* Marcas */
+.m{box-shadow:inset 0 -2px var(--tono)}
+
+.pie{font-size:13px;color:var(--muted-2);margin:0}
+
+/* La leyenda de código abierto, hasta el final de todo. */
+.abierto{
+  border-top:2px dashed var(--rule);
+  padding-top:24px;
+  max-width:680px;
+  color:var(--muted-2);
+}
+.abierto h2{
+  font-family:'Special Elite',monospace;font-weight:400;
+  font-size:19px;color:var(--red);margin:0 0 10px;
+}
+.abierto p{font-size:14px;line-height:1.8;margin:0}
+
+/* Lo que se lee hasta abajo: para quien llegó de un buscador y todavía no sabe
+   qué es esto. No se imprime (ver la regla de @media print). */
+.explica{
+  border-top:2px dashed var(--rule);
+  padding-top:26px;
+  max-width:680px;
+  color:var(--muted);
+}
+.explica h2{
+  font-family:'Special Elite',monospace;font-weight:400;
+  font-size:21px;line-height:1.25;color:var(--text);
+  margin:24px 0 10px;
+}
+.explica h2:first-child{margin-top:0}
+.explica p{font-size:14.5px;line-height:1.8;margin:0 0 12px}
+.explica b{color:var(--text);font-weight:700}
+.explica em{color:var(--text)}
+
+/* Avisos: analizador caído, LanguageTool frenado, etc. */
+.aviso{
+  border:2px dashed var(--red);background:#f7e9e6;
+  padding:12px 16px;font-size:13.5px;line-height:1.6;color:var(--text);
+  display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;
+}
+.aviso button{
+  background:transparent;border:none;color:var(--red);
+  font-size:13.5px;cursor:pointer;text-decoration:underline;padding:0;
+}
+.cargando{font-size:13px;color:var(--muted-2)}
+
+/* ---------------- chiquito ---------------- */
+
+.lateral__abrir{display:none}
+
+@media (max-width:900px){
+  .pagina{flex-direction:column}
+  .lateral{
+    width:auto;border-right:none;border-bottom:2px dashed var(--rule);
+    padding:20px 22px;gap:18px;
+  }
+  .lateral__abrir{
+    display:block;align-self:flex-start;
+    font-size:14px;background:transparent;border:2px dashed var(--rule-3);
+    padding:8px 14px;cursor:pointer;color:var(--text);
+  }
+  .lateral__cuerpo{display:none;flex-direction:column;gap:22px}
+  .lateral.abierta .lateral__cuerpo{display:flex}
+  .creditos{margin-top:0;padding-top:18px}
+  .contenido{padding:28px 22px 56px;gap:20px}
+  .encabezado h1{font-size:38px}
+  .anotado{padding:22px 20px;font-size:16px}
+  .campo{padding:18px 20px;min-height:300px}
+}
+
+/* ---------------- impresión / PDF ----------------
+   El navegador guarda esto como PDF con todo y colores. */
+
+@media print{
+  @page{margin:18mm}
+  body{background:#fff}
+    .lateral,.encabezado a,.acciones,.entrada,.aviso,.cargando,.pie,.explica,.abierto{display:none !important}
+  .pagina{display:block}
+  .contenido{max-width:none;padding:0;gap:16px}
+  .encabezado h1{transform:none;font-size:32px}
+  .anotado{
+    border:none;box-shadow:none;padding:0;background:#fff;
+    font-size:12pt;line-height:1.9;
+  }
+  .leyenda span,.m{
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  .resultados__barra h2{font-size:16pt}
+}

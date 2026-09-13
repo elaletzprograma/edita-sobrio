@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edita Sobrio — analizador de estilo para textos en español, gratis</title>
+<meta name="description" content="Pega tu texto y te marca clichés, adverbios en -mente, adjetivos de relleno, repeticiones, rimas, diminutivos y tus propias muletillas. Gratis y sin registro.">
+<link rel="canonical" href="https://editasobrio.elaletz.com/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="author" content="El Aletz">
+<meta name="theme-color" content="#f2ede3">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f2ede3'/%3E%3Ctext x='16' y='25' font-family='Courier New,monospace' font-size='24' fill='%23c93a32' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css?v=2">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Apps de El Aletz">
+<meta property="og:locale" content="es_MX">
+<meta property="og:title" content="Edita Sobrio — analizador de estilo para textos en español">
+<meta property="og:description" content="Pega tu texto y te marca clichés, adverbios en -mente, repeticiones, muletillas y diminutivos. Gratis, sin registro.">
+<meta property="og:url" content="https://editasobrio.elaletz.com/">
+<meta property="og:image" content="https://editasobrio.elaletz.com/assets/portada.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Edita Sobrio, analizador de estilo para textos en español">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Edita Sobrio — analizador de estilo para textos en español">
+<meta name="twitter:description" content="Pega tu texto y te marca clichés, adverbios en -mente, repeticiones, muletillas y diminutivos. Gratis, sin registro.">
+<meta name="twitter:image" content="https://editasobrio.elaletz.com/assets/portada.png">
+</head>
+<body>
+
+<div class="pagina">
+
+  <aside class="lateral" id="lateral">
+    <button class="lateral__abrir btn-punteado" type="button" id="btn-opciones"
+            aria-expanded="false" aria-controls="lateral-cuerpo">Opciones de estilo</button>
+
+    <div class="lateral__cuerpo" id="lateral-cuerpo">
+      <div>
+        <h2>Opciones de estilo</h2>
+        <div class="vicios" id="vicios"></div>
+      </div>
+
+      <div class="bloque">
+        <button class="btn-punteado" type="button" id="btn-banco"
+                aria-expanded="false" aria-controls="banco">Banco de clichés</button>
+        <div class="banco" id="banco" hidden></div>
+      </div>
+
+      <div class="bloque" id="bloque-manias">
+        <h2>Mis mañas</h2>
+        <p class="manias__nota">Tus muletillas: esas palabras y frases a las que
+          le pegas sin darte cuenta. Apúntalas y el análisis también las marca.
+          Se guardan en este navegador, no se suben a ningún lado.</p>
+
+        <form class="manias__forma" id="forma-mania">
+          <input type="text" id="mania-frase" maxlength="120"
+                 placeholder="tu muletilla…" aria-label="Nueva maña">
+          <button type="submit" class="btn-punteado">Apuntar</button>
+        </form>
+
+        <p class="manias__error" id="mania-error" hidden role="alert"></p>
+        <div class="manias" id="manias"></div>
+
+        <p class="manias__copia">
+          <button type="button" id="btn-bajar-manias">guardar copia</button> ·
+          <button type="button" id="btn-subir-manias">cargar copia</button>
+          <input type="file" id="archivo-manias" accept=".txt,text/plain" hidden>
+        </p>
+      </div>
+
+      <div class="bloque">
+        <div id="compartir" data-app="edita"></div>
+      </div>
+
+      <div class="creditos">
+        <img class="aletz" src="assets/el-aletz.webp" alt="El Aletz">
+        <p>App creada por <a href="https://elaletz.com">El Aletz</a>. Escritor. Aprendiz de boxeador. Bellako onírico. Punk imaginal.<br>Sugerencias: <a href="mailto:escribele@elaletz.com">escribele@elaletz.com</a></p>
+        <img class="tinta" src="assets/tinta-chida.png" alt="Tinta Chida">
+      </div>
+    </div>
+  </aside>
+
+  <main class="contenido">
+
+    <header class="encabezado">
+      <div>
+        <h1>Edita sobrio</h1>
+        <p class="kicker">etapa 02 · ahora sí, échale intelecto</p>
+      </div>
+      <a href="https://escribeborracho.elaletz.com">← ¿te falta texto? escribe borracho</a>
+    </header>
+
+    <div class="aviso" id="aviso" hidden role="status"></div>
+
+    <!-- ============ ENTRADA ============ -->
+    <section class="entrada" id="pantalla-entrada">
+      <div>
+        <p class="entrada__titulo">Pega aquí tu obra maestra</p>
+        <p class="entrada__tip">Tip: usa Ctrl+Enter (Cmd+Enter en Mac) para analizar directamente.</p>
+      </div>
+      <textarea class="campo" id="texto" spellcheck="false"
+                placeholder="Todo lo que escribiste borracho, aquí se pone a dieta..."
+                aria-label="Tu texto"></textarea>
+      <button class="analizar" type="button" id="btn-analizar">Analizar</button>
+    </section>
+
+    <!-- ============ RESULTADOS ============ -->
+    <section class="resultados" id="pantalla-resultados" hidden>
+      <div class="resultados__barra">
+        <h2>Análisis estilístico</h2>
+        <div class="acciones">
+          <button class="btn-punteado" type="button" id="btn-editar" aria-pressed="false">Editar en vivo</button>
+          <button class="btn-punteado" type="button" id="btn-pdf">Descargar PDF</button>
+          <button class="btn-punteado" type="button" id="btn-limpiar">Limpiar y hacer nuevo análisis</button>
+        </div>
+      </div>
+
+      <div class="leyenda" id="leyenda"></div>
+      <div class="anotado" id="anotado" spellcheck="false"></div>
+      <p class="pie" id="pie"></p>
+    </section>
+
+    <section class="explica">
+      <h2>¿Qué hace Edita Sobrio?</h2>
+      <p>Es un analizador de estilo gratis para textos en español. Pegas lo que
+      escribiste y te marca, con colores, los vicios que uno no alcanza a ver
+      en su propio texto: <b>adjetivos</b> de relleno, <b>adverbios terminados
+      en -mente</b>, <b>palabras repetidas</b>, <b>rimas accidentales</b>,
+      <b>perífrasis</b> con gerundio, <b>pretérito compuesto</b>, <b>frases
+      hechas y clichés</b>, y <b>diminutivos y superlativos</b>. Prendes y
+      apagas cada cosa según lo que andes cazando.</p>
+
+      <h2>Tus propias muletillas</h2>
+      <p>Todos tenemos mañas: palabras y frases a las que le pegamos sin darnos
+      cuenta. Apúntalas en "Mis mañas" y el análisis también te las marca. Se
+      guardan en tu navegador, no se suben a ningún lado, y puedes bajarlas en
+      un archivo para llevártelas a otra máquina.</p>
+
+      <h2>No es un corrector de ortografía</h2>
+      <p>Eso ya lo hace cualquier aplicación y no hace falta otra. Esto es otra
+      cosa: no te dice que escribiste mal, te enseña dónde estás escribiendo de
+      más. Qué quitar y qué dejar siempre lo decides tú, porque a veces el
+      cliché es justo lo que el personaje diría.</p>
+
+      <h2>¿Cómo distingue un adjetivo de verdad?</h2>
+      <p>No con una lista de palabras. Lee la oración completa y mira la
+      función que cumple cada palabra dentro de ella, así que en "el viejo salió
+      de la casa vieja" marca el segundo <em>vieja</em> y deja en paz al
+      <em>viejo</em>, que ahí está funcionando como sustantivo. Tu texto se
+      manda al servidor para ese análisis, pero no se guarda ni se escribe en
+      disco: se revisa, te devuelve las marcas y se suelta.</p>
+
+      <h2>¿Es gratis?</h2>
+      <p>Sí, completa, sin cuenta ni registro ni anuncios, en compu o celular.
+      La hice para mis talleres de escritura en la Ciudad de México. Si te falta
+      el borrador, empieza por
+      <a href="https://escribeborracho.elaletz.com">Escribe Borracho</a>.</p>
+    </section>
+
+    <div class="abierto">
+      <h2>Esta app es de código abierto</h2>
+      <p>El código completo vive en <a href="https://github.com/elaletzprograma/edita-sobrio" rel="noopener">GitHub</a>. Bájalo,
+      forkéalo, destrípalo y modifícalo todo lo que quieras: no tienes que pedir
+      permiso ni darme crédito. Si le haces algo chido, cuéntamelo a
+      <a href="mailto:escribele@elaletz.com">escribele@elaletz.com</a>.</p>
+    </div>
+
+  </main>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Edita Sobrio",
+  "url": "https://editasobrio.elaletz.com/",
+  "applicationCategory": "Aplicación de escritura",
+  "operatingSystem": "Navegador web",
+  "inLanguage": "es-MX",
+  "description": "Analizador de estilo gratis para textos en español: marca clichés, adverbios en -mente, adjetivos, repeticiones, rimas, diminutivos y tus propias muletillas.",
+  "author": { "@type": "Person", "name": "El Aletz", "url": "https://elaletz.com" },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "MXN" },
+  "isPartOf": { "@type": "WebSite", "name": "Apps de El Aletz", "url": "https://apps.elaletz.com/" }
+}
+</script>
+
+<script src="aviso.js?v=2"></script>
+<script src="compartir.js?v=1"></script>
+<script src="motor-local.js?v=2"></script>
+<script src="app.js?v=2"></script>
+</body>
+</html>

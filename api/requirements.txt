@@ -1,0 +1,9 @@
+# La API de Edita Sobrio. spaCy va clavado a 3.7.x porque el modelo
+# es_core_news_md 3.7.0 no carga con otra rama.
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+spacy==3.7.4
+thinc==8.2.3
+numpy==1.26.4
+es-core-news-md @ https://github.com/explosion/spacy-models/releases/download/es_core_news_md-3.7.0/es_core_news_md-3.7.0-py3-none-any.whl
